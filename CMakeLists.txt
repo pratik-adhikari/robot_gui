@@ -140,7 +140,8 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/robot_gui_node.cpp)
 add_library(description_area src/description_area.cpp)
-add_executable(${PROJECT_NAME}_node src/robot_gui_main.cpp)
+add_library(teleop_control src/TeleopControlArea.cpp)
+add_executable(${PROJECT_NAME}_node src/robot_gui_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -157,6 +158,7 @@ target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
   description_area
+  teleop_control
 )
 
 #############
