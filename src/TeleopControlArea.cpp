@@ -27,4 +27,10 @@ void TeleopControlArea::update(cv::Mat &frame) {
   msg.linear.x = linear_velocity_;
   msg.angular.z = angular_velocity_;
   pub_.publish(msg);
+
+  // Display velocity info for debugging (optional)
+  cvui::printf(frame, 20, 330, 0.4, 0x0000FF, "Linear Vel: %.2f",
+               linear_velocity_);
+  cvui::printf(frame, 20, 350, 0.4, 0x0000FF, "Angular Vel: %.2f",
+               angular_velocity_);
 }
