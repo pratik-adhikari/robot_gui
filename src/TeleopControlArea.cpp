@@ -5,6 +5,7 @@ TeleopControlArea::TeleopControlArea()
   pub_ = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
   odom_sub_ = nh.subscribe<nav_msgs::Odometry>(
       "/odom", 10, &TeleopControlArea::odomCallback, this);
+  distance_client_ = nh.serviceClient<std_srvs::Trigger>("/get_distance");
 }
 
 void TeleopControlArea::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
@@ -45,4 +46,20 @@ void TeleopControlArea::update(cv::Mat &frame) {
   cvui::printf(frame, 150, 360, 0.4, 0xFFFFFF, "Position Z: %.2f", position_.z);
   cvui::printf(frame, 150, 375, 0.4, 0xFFFFFF, "Angular  Z: %.2f",
                orientation_.z);
+
+  if (cvui::button(frame, 20, 400, "Call")) {
+    std_srvs::Trigger srv;
+    if (distance_client_.call(srv)) {
+      if (srv.response.success) {
+        distance_message_ =
+            "Distance traveled: " + srv.response.message + " meters";
+      } else {
+        distance_message_ = "Failed to get distance: " + srv.response.message;
+      }
+    } else {
+      distance_message_ = "Service call failed.";
+    }
+  }
+
+  cvui::printf(frame, 20, 440, 0.4, 0x0000FF, "%s", distance_message_.c_str());
 }

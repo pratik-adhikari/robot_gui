@@ -6,6 +6,7 @@
 #include <nav_msgs/Odometry.h>
 #include <opencv2/opencv.hpp>
 #include <ros/ros.h>
+#include <std_srvs/Trigger.h>
 
 class TeleopControlArea {
 public:
@@ -23,6 +24,9 @@ private:
   geometry_msgs::Quaternion orientation_;
 
   void odomCallback(const nav_msgs::Odometry::ConstPtr &msg);
+
+  ros::ServiceClient distance_client_;
+  std::string distance_message_;
 };
 
 #endif // TELEOP_CONTROL_AREA_H
