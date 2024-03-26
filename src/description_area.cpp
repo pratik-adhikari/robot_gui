@@ -36,7 +36,7 @@ std::vector<std::string> DescriptionArea::splitString(const std::string &str,
 }
 
 void DescriptionArea::update(cv::Mat &frame) {
-  cvui::window(frame, 15, 20, 250, 210, "Robot Info");
+  cvui::window(frame, 15, 15, 250, 200, "Robot Info");
   std::vector<std::string> lines = splitString(data_string, '\n');
   int startY = 45;
   for (const auto &line : lines) {
